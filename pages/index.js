@@ -20,20 +20,6 @@ function Title(props) {
     );
   }
 
-// // React Component
-// function HomePage() {
-//     // JSX (JavaScript XML)
-//     return(
-//     <div>
-//         <GlobalStyle />
-//         <Title tag="h1">Bem vindo de volta!</Title>
-//         <h2>Discord - Alura Matrix</h2>
-//     </div>
-//     )
-// }
-
-// export default HomePage;
-
 export default function PaginaInicial() {
 
     const [username, setUsername] = React.useState('');
