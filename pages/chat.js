@@ -1,6 +1,11 @@
 import React from 'react';
 import appConfig from '../config.json';
 import { Box, Text, TextField, Image, Button } from '@skynexui/components';
+import { createClient } from '@supabase/supabase-js';
+
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzMwODExNywiZXhwIjoxOTU4ODg0MTE3fQ.kqycgG4fkR67QFmtVYkjW3jFTR64JwhMq0nGU1GVdsQ'
+const SUPABASE_URL = 'https://uxuraoytcntbrywwdqsm.supabase.co'
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default function ChatPage() {
 
@@ -9,14 +14,30 @@ export default function ChatPage() {
 
     const handleNewMessage = (newMessage) => {
         const messageInfo = {
+            // id: messageList.length + 1,
             text: newMessage,
             from: 'bernardomennndes',
-            id: messageList.length,
-            timeStamp: ''
         }
-        setMessageList([messageInfo, ...messageList]);
+
+        supabaseClient
+            .from('messages')
+            .insert([messageInfo])
+            .then( ({ data }) => {
+                setMessageList([data[0], ...messageList]);
+            } )
+
         setMessage('');
     }
+
+    // Unable the React 'ChatPage' component of reloading everytime the page changes, only when messageList is altered.
+    React.useEffect(() => {
+        //  Call all the messages from the data base.
+        supabaseClient
+            .from('messages')
+            .select('*')
+            .then( ({ data }) => {setMessageList(data)} )
+    }, [])
+
 
     return (
         <Box
@@ -130,7 +151,7 @@ function MessageList(props) {
                 marginBottom: '16px',
             }}
         >
-            {props.messages.map((messageObj) => {
+            {props.messages.reverse().map((messageObj) => {
                 return (
                     <Text
                         key={messageObj.id}
