@@ -12,7 +12,6 @@ function GlobalStyle() {
           font-family: 'Open Sans', sans-serif;
         }
 
-        /* App fit Height */ 
         html, body, #__next {
           min-height: 100vh;
           display: flex;
@@ -27,7 +26,6 @@ function GlobalStyle() {
           flex: 1;
         }
 
-        /* ./App fit Height */ 
       `}</style>
     );
 }

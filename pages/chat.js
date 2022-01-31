@@ -50,9 +50,7 @@ export default function ChatPage() {
             .from('messages')
             .insert([messageInfo])
             .order('id', { ascending: false })
-            .then( ({ data }) => {
-                // setMessageList( [data[0], ...messageList] );
-            } )
+            .then()
 
         setMessage('');
     }
