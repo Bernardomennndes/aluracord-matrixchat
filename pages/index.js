@@ -1,22 +1,23 @@
 import React from 'react';
+import Head from 'next/head';
 import appConfig from '../config.json';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
-import  Head  from 'next/head';
 
 export default function PaginaInicial() {
 
   const router = useRouter();
   const [username, setUsername] = React.useState('');
-  const [checkedUser, setCheckUser] = React.useState(true);
-  const [userPoints, setUserPoints] = React.useState('-');
+  const [checkedUser, setCheckUser] = React.useState(false);
   const [userInfo, setUserInfo] = React.useState({});
 
-  React.useEffect(() => {
-    (userInfo.hasOwnProperty('id') ?
-      setCheckUser(true) :
-      setCheckUser(false))
-  }, [userInfo])
+  const getGHUserData = async (githubUsername) => {
+    if (githubUsername.length >= 1) {
+      const userObjInfo = await fetch(`https://api.github.com/users/${githubUsername}`);
+      const convertedInfo = await userObjInfo.json();
+      return setUserInfo(convertedInfo);
+    }
+  }
 
   return (
     <>
@@ -50,13 +51,13 @@ export default function PaginaInicial() {
             backgroundColor: appConfig.theme.colors.neutrals['900'],
           }}
         >
-          <Text styleSheet={{
+          <h1 style={{
             transform: 'rotate(90deg)',
             color: appConfig.theme.colors.neutrals['000'],
             fontSize: '20px', width: 'auto'
           }}>
-            {userPoints} points
-          </Text>
+            {checkedUser ? userInfo.public_repos : '-'} points
+          </h1>
         </Box>
         {/* Points Container */}
 
@@ -101,7 +102,7 @@ export default function PaginaInicial() {
                 borderRadius: '50%',
                 marginBottom: '16px'
               }}
-              src={``}
+              src={checkedUser ? userInfo.avatar_url : 'https://freepngimg.com/thumb/assassin_creed_syndicate/22941-1-assassin-creed-syndicate-hd-thumb.png'}
             />
 
             <Text
@@ -133,57 +134,55 @@ export default function PaginaInicial() {
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
             }}
           >
-            <Title tag="h2">Welcome to the fallen matrix source code</Title>
-            <Text variant="body3" styleSheet={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
-              {appConfig.name}
-            </Text>
+            <Title tag="h2">Welcome to the <br /> {appConfig.name} </Title>
+
+            <hr style={{ width: '500px', height: '0px', padding: '0px', margin: '25px', borderStyle: 'solid', borderColor: appConfig.theme.colors.neutrals['700'] }}></hr>
 
             <Box
               as="div"
-              styleSheet={{ 
+              styleSheet={{
                 display: 'flex', justifyContent: 'center', alignItems: 'center',
-                }}>
+              }}>
 
               <TextField
                 value={username}
-                styleSheet={{width: '318px', position: 'relative', left: '20px'}}
+                styleSheet={{ width: '318px', position: 'relative', left: '20px' }}
                 onChange={(event) => { setUsername(event.target.value) }}
                 onKeyPress={(event) => {
                   // If the checkedUser is false, the enter key runs the check button, if true, runs the join button
                   if (event.code === 'Enter' && checkedUser == false) {
                     event.preventDefault();
-                    CheckUser(username);
+                    getGHUserData(username);
+                    if (userInfo.hasOwnProperty('id')) { setCheckUser(true) }
                   }
                 }}
                 textFieldColors={{
                   neutral: {
                     textColor: appConfig.theme.colors.neutrals['200'],
-                    mainColor: appConfig.theme.colors.neutrals['900'],
-                    mainColorHighlight: appConfig.theme.colors.primary['500'],
+                    mainColor: (checkedUser ? 'green' : appConfig.theme.colors.neutrals['900']),
+                    mainColorHighlight: (checkedUser ? 'green' : appConfig.theme.colors.primary['500']),
                     backgroundColor: appConfig.theme.colors.neutrals['800'],
                   },
                 }}
               ></TextField>
 
-              <Button
+              <button
                 type="button"
                 label="Check"
                 colorVariant="positive"
                 rounded='sm'
                 size='xs'
                 onClick={() => {
-                  setUserInfo(() => {
-                    fetch(`https://api.github.com/users/${username}`)
-                      .then((serverResponse) => { return serverResponse.json() })
-                      .then((serverConvertedResponse) => { return serverConvertedResponse })
-                  })
-
+                  getGHUserData(username);
+                  if (userInfo.hasOwnProperty('id')) { setCheckUser(true) }
                 }}
-                styleSheet={{
+                style={{
                   position: 'relative', bottom: '4px', right: '33px',
-                  padding: '3px', margin: '0px', fontSize: '8px'
+                  padding: '4px', margin: '0px', backgroundColor: 'green',
+                  border: 'none', borderRadius: '2px',
+                  fontFamily: 'Montserrat', fontWeight: '500', fontSize: '11px', color: 'white'
                 }}
-              />
+              >Check</button>
             </Box>
 
             <Button

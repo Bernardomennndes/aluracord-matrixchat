@@ -1,6 +1,9 @@
 function GlobalStyle() {
     return (
       <style global jsx>{`
+
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300&display=swap');
+
         * {
           margin: 0;
           padding: 0;
@@ -9,7 +12,7 @@ function GlobalStyle() {
         }
 
         body {
-          font-family: 'Open Sans', sans-serif;
+          font-family: 'Montserrat', sans-serif;
         }
 
         html, body, #__next {
