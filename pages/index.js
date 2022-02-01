@@ -123,7 +123,7 @@ export default function PaginaInicial() {
                 borderRadius: '0px'
               }}
             >
-              {checkedUser ? (userInfo.name || userInfo.login) : 'User could not be found'}
+              {`< ${checkedUser ? (userInfo.name || userInfo.login) : 'User could not be found'} />`}
             </h2>
 
           </Box>
@@ -143,7 +143,7 @@ export default function PaginaInicial() {
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
             }}
           >
-            <Title tag="h2">Welcome to the <br /> {appConfig.name} </Title>
+            <Title tag="h2">Welcome to the <br /> <span style={{textDecoration: 'line-through'}}>{appConfig.name}</span> </Title>
 
             <hr style={{ width: '500px', height: '1px', margin: '25px', border: 'none', backgroundColor: appConfig.theme.colors.neutrals['600']  }}></hr>
 
@@ -155,7 +155,7 @@ export default function PaginaInicial() {
 
               <TextField
                 value={username}
-                styleSheet={{ width: '318px', position: 'relative', left: '20px', fontWeight: '700'}}
+                styleSheet={{ width: '368px',position: 'relative', left: '20px', fontWeight: '700'}}
                 onChange={(event) => { setUsername(event.target.value) }}
                 onKeyPress={(event) => {
                   // If the checkedUser is false, the enter key runs the check button, if true, runs the join button
@@ -198,13 +198,13 @@ export default function PaginaInicial() {
               type='submit'
               disabled={!checkedUser}
               label='Join'
-              fullWidth
               buttonColors={{
                 contrastColor: appConfig.theme.colors.neutrals["000"],
                 mainColor: appConfig.theme.colors.primary["000"],
                 mainColorLight: appConfig.theme.colors.primary["050"],
                 mainColorStrong: appConfig.theme.colors.primary["050"],
               }}
+              styleSheet={{width: '368px'}}
             />
           </Box>
           {/* Form */}
@@ -226,7 +226,7 @@ function Title(props) {
               ${Tag} {
                   color: ${appConfig.theme.colors.neutrals['000']};
                   font-size: 24px;
-                  font-weight: 600;
+                  font-weight: 500;
               }
               `}</style>
     </>
