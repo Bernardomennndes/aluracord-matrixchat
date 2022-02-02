@@ -68,7 +68,7 @@ export default function ChatPage() {
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     backgroundColor: appConfig.theme.colors.neutrals['100'],
                     backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
-                    color: appConfig.theme.colors.neutrals['000']
+                    color: appConfig.theme.colors.neutrals['000'],
                 }}
             >
                 <Box
@@ -107,8 +107,9 @@ export default function ChatPage() {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
+                                border: `2px solid ${appConfig.theme.colors.primary['000']}`,
                                 borderRadius: '5px',
-                                backgroundColor: appConfig.theme.colors.neutrals[800]
+                                backgroundColor: appConfig.theme.colors.neutrals['600']
                             }}
                         >
                             <TextField
@@ -129,9 +130,9 @@ export default function ChatPage() {
                                     border: '0',
                                     resize: 'none',
                                     padding: '6px 8px',
-                                    backgroundColor: appConfig.theme.colors.neutrals[800],
+                                    backgroundColor: appConfig.theme.colors.neutrals['600'],
                                     marginRight: '12px',
-                                    color: appConfig.theme.colors.neutrals[200],
+                                    color: appConfig.theme.colors.neutrals['100'],
                                 }}
                             />
                             <SendStickerButton
@@ -140,9 +141,13 @@ export default function ChatPage() {
                                 }}
                             />
                             <button type='button' style={{
-                                padding: '16px',
+                                backgroundColor: 'transparent',
+                                border: 'none',
+                                padding: '5px',
+                                color: appConfig.theme.colors.primary['000'],
+                                hover: {color: appConfig.theme.colors.primary['500']}
                             }}>
-
+                                <i class="fas fa-angle-double-right fa-2x"></i>
                             </button>
                         </Box>
                     </Box>
@@ -157,9 +162,9 @@ function Header() {
     return (
         <>
             <Box styleSheet={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
-                <Text variant='heading5' styleSheet={{ textAlign: 'center' }}>
+                <text variant='heading5' styleSheet={{ textAlign: 'center' }}>
                     Chat
-                </Text>
+                </text>
                 <Button
                     variant='tertiary'
                     colorVariant='neutral'
@@ -197,7 +202,8 @@ function MessageList(props) {
                             marginBottom: '12px',
                             hover: {
                                 backgroundColor: appConfig.theme.colors.neutrals[400],
-                            }
+                            },
+                            fontFamily: 'Montserrat, sans-serif'
                         }}
                     >
                         <Box
@@ -206,21 +212,25 @@ function MessageList(props) {
                                 marginBottom: '8px',
                             }}
                         >
+
                             <Image
                                 styleSheet={{
                                     width: '20px',
                                     height: '20px',
+                                    border: `1px solid ${appConfig.theme.colors.primary['000']}`,
                                     borderRadius: '50%',
                                     display: 'inline-block',
                                     marginRight: '8px',
                                 }}
                                 src={`https://github.com/${messageObj.from}.png`}
                             />
-                            <Text tag="strong" styleSheet={{color: appConfig.theme.colors.neutrals['050']}}>
+
+                            <text tag="strong" style={{color: appConfig.theme.colors.neutrals['050']}}>
                                 | {messageObj.from}
-                            </Text>
-                            <Text
-                                styleSheet={{
+                            </text>
+
+                            <text
+                                style={{
                                     fontSize: '10px',
                                     fontWeight: '700',
                                     marginLeft: '8px',
@@ -228,10 +238,14 @@ function MessageList(props) {
                                 }}
                                 tag="span"
                             >
-                                {(new Date().toLocaleDateString())}
-                            </Text>
-                        </Box>
-                        {messageObj.text.startsWith(':sticker:') ? <Image src={messageObj.text.replace(':sticker: ', '')} /> : messageObj.text}
+                                {/* Database timeStamp model example: 2022-01-27T22:03:48.000Z */}
+                                {/* Convert to 'Date / Month / Year - Hour:Minute' using replace method and Regex*/}
+                                {messageObj.timeStamp.replace(/(\d{4})-(\d{2})-(\d{2})T(.{5}).*/, '$3 / $2 / $1 - $4')}
+                            </text>
+
+                        </Box>         
+                            {messageObj.text.startsWith(':sticker:') ? <Image src={messageObj.text.replace(':sticker: ', '')} /> : <p style={{fontSize: '14px'}}><i class="fas fa-reply" style={{transform: 'rotate(180deg)', color: appConfig.theme.colors.primary['999'], opacity: '0.2', padding: '0px 5px'}}></i>{messageObj.text}</p>}
+                        
                     </Text>
                 )
             })}

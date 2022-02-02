@@ -14,22 +14,22 @@ export function SendStickerButton(props) {
       <Button
         styleSheet={{
           borderRadius: '50%',
-          padding: '0 3px 0 0',
-          minWidth: '50px',
-          minHeight: '50px',
+          padding: '4px',
+          minWidth: '20px',
+          minHeight: '20px',
           fontSize: '20px',
           lineHeight: '0',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.neutrals[300],
+          backgroundColor: 'transparent',
           filter: isOpen ? 'grayscale(0)' : 'grayscale(1)',
           hover: {
             filter: 'grayscale(0)',
           }
         }}
-        label="😋"
         onClick={() => setOpenState(!isOpen)}
+        label={<i class="far fa-sticky-note"></i>}
       />
       {isOpen && (
         <Box
