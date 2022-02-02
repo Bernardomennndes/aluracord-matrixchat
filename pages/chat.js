@@ -244,7 +244,7 @@ function MessageList(props) {
                             </text>
 
                         </Box>         
-                            {messageObj.text.startsWith(':sticker:') ? <Image src={messageObj.text.replace(':sticker: ', '')} /> : <p style={{fontSize: '14px'}}><i class="fas fa-reply" style={{transform: 'rotate(180deg)', color: appConfig.theme.colors.primary['999'], opacity: '0.2', padding: '0px 5px'}}></i>{messageObj.text}</p>}
+                            {messageObj.text.startsWith(':sticker:') ? <Image src={messageObj.text.replace(':sticker: ', '')} /> : <p style={{fontSize: '14px', paddingLeft: '15px'}}>{messageObj.text}</p>}
                         
                     </Text>
                 )
