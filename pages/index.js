@@ -75,7 +75,7 @@ export default function PaginaInicial() {
             flexDirection: 'column',
             width: '100%', maxWidth: '800px',
             maxHeight: '600px',
-            borderRadius: '0px 5px 5px 0px', padding: '32px',
+            borderRadius: '0px 5px 5px 0px', padding: '16px',
             boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
             backgroundColor: appConfig.theme.colors.neutrals['200'],
           }}
@@ -90,8 +90,8 @@ export default function PaginaInicial() {
               flexDirection: 'column',
               alignItems: 'center',
               maxWidth: '300px', width: '100%',
-              padding: '16px',
               marginBottom: '20px',
+              padding: '10px',
               backgroundImage: `linear-gradient(to bottom right, ${appConfig.theme.colors.neutrals['200']}, ${appConfig.theme.colors.primary['000']})`,
               borderRight: '0px solid', borderBottom: '0px solid',
               borderColor: appConfig.theme.colors.neutrals['999'],
@@ -105,7 +105,7 @@ export default function PaginaInicial() {
               styleSheet={{
                 width: '250px', height: '250px',
                 borderRadius: '50%',
-                marginBottom: '18px',
+                marginBottom: '5px',
                 opacity: '0.7',
                 boxShadow: `0 0 10px ${appConfig.theme.colors.primary['000']}`
               }}
@@ -150,7 +150,7 @@ export default function PaginaInicial() {
             <Box
               as="div"
               styleSheet={{
-                display: 'flex', justifyContent: 'center', alignItems: 'center',
+                display: 'flex', justifyContent: 'center', alignItems: 'center', height: '36px', position: 'relative', top: '5px'
               }}>
 
               <TextField
@@ -194,6 +194,8 @@ export default function PaginaInicial() {
               >Check</button>
             </Box>
 
+            <p style={{fontSize: '11px', fontWeight: '700', color: appConfig.theme.colors.neutrals['600']}}>Press enter to check if the username is a valid GitHub account.</p>
+
             <Button
               type='submit'
               disabled={!checkedUser}
@@ -204,7 +206,7 @@ export default function PaginaInicial() {
                 mainColorLight: appConfig.theme.colors.primary["050"],
                 mainColorStrong: appConfig.theme.colors.primary["050"],
               }}
-              styleSheet={{width: '368px'}}
+              styleSheet={{width: '368px', marginTop: '8px'}}
             />
           </Box>
           {/* Form */}
